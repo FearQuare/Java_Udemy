@@ -2,37 +2,40 @@ import java.util.*;
 
 public class Test {
     public static void main(String[] args) {
-        ArrayList<Songs> lustForLife = new ArrayList<>();
         ArrayList<Album> albums = new ArrayList<>();
         LinkedList<Songs> playlist = new LinkedList<>();
+
+        ArrayList<Songs> lustForLifeSongs = new ArrayList<>();
 
         Songs Love = new Songs("Love", 4.32);
         Songs LustforLife = new Songs("Lust for Life", 4.24);
         Songs ThirteenBeaches = new Songs("13 Beaches", 4.55);
 
-        lustForLife.add(Love);
-        lustForLife.add(LustforLife);
-        lustForLife.add(ThirteenBeaches);
+        lustForLifeSongs.add(Love);
+        lustForLifeSongs.add(LustforLife);
+        lustForLifeSongs.add(ThirteenBeaches);
 
-        Album LustForLife = new Album(lustForLife);
-        albums.add(LustForLife);
+        Album lustForLifeAlbum = new Album(lustForLifeSongs);
+        albums.add(lustForLifeAlbum);
 
+        ArrayList<Songs> humanSongs = new ArrayList<>();
 
-
-        ArrayList<Songs> human = new ArrayList<>();
         Songs humanRace = new Songs("Human Race", 4.09);
         Songs painkiller = new Songs("Painkiller", 2.59);
         Songs fallenAngel = new Songs("Fallen Angel", 3.06);
-        human.add(humanRace);
-        human.add(painkiller);
-        human.add(fallenAngel);
-        Album Human = new Album(human);
-        albums.add(Human);
 
-        addPlaylist(playlist, albums, "Pain Killer");
-        addPlaylist(playlist, albums, "Lust for Life");
-        addPlaylist(playlist, albums, "Fallen Angel");
-        addPlaylist(playlist, albums, "13 Beaches");
+        humanSongs.add(humanRace);
+        humanSongs.add(painkiller);
+        humanSongs.add(fallenAngel);
+
+        Album humanAlbum = new Album(humanSongs);
+        albums.add(humanAlbum);
+
+        addPlaylist(playlist, albums, "Human Race");
+        addPlaylist(playlist, albums, "Love");
+
+        System.out.println(playlist.get(0).getTitle());
+        System.out.println(playlist.get(1).getTitle());
 
         surf(playlist);
 
@@ -42,24 +45,29 @@ public class Test {
         System.out.println("To quit: 0\nTo Skip: 1\nTo Previous: 2");
     }
 
-    private static void addPlaylist(LinkedList<Songs> linkedList, ArrayList<Album> arrayList, String song){
+    private static void addPlaylist(LinkedList<Songs> linkedList, ArrayList<Album> albums, String song){
         int counter = 0;
         int index1 = 0;
         int index2 = 0;
-        for (Album album : arrayList) {
-            for (int j = 0; j < album.getAlbum().size(); j++) {
-                if (album.getAlbum().get(j).getTitle().equals(song)) {
+        if(linkedList.isEmpty()){
+            for(int i = 0; i < albums.size(); i++){
+                for(int j = 0; j<albums.get(i).getAlbum().size(); j++){
                     counter++;
+                    index1++;
+                    break;
                 }
+                index1 = 0;
                 index2++;
             }
-            index1++;
-        }
-        if(counter>0){
-            linkedList.add(arrayList.get(index1-1).getAlbum().get(index2-1));
+            if(counter>0){
+                linkedList.add(albums.get(index2-1).getAlbum().get(index1));
+            }else{
+                System.out.println("The song you are searching for is unavailable.");
+            }
         }else{
-            System.out.println("The song is unavailable.");
+            
         }
+
     }
 
     private static void surf(LinkedList<Songs> linkedList){
@@ -72,7 +80,7 @@ public class Test {
             System.out.println("No songs in the queue");
             return;
         }else{
-            System.out.println("Now visiting " + songsListIterator.next());
+            System.out.println("Now visiting " + songsListIterator.next().getTitle());
         }
 
         while(flag){
