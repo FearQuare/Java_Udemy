@@ -82,7 +82,7 @@ public class Test {
             System.out.println("No songs in the queue");
             return;
         }else{
-            System.out.println("Now visiting " + songsListIterator.next().getTitle());
+            System.out.println("Now listening " + songsListIterator.next().getTitle());
         }
 
         while(flag){
