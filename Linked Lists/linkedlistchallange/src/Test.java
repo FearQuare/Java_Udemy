@@ -31,11 +31,8 @@ public class Test {
         Album humanAlbum = new Album(humanSongs);
         albums.add(humanAlbum);
 
-        addPlaylist(playlist, albums, "Human Race");
-        addPlaylist(playlist, albums, "Love");
-
-        System.out.println(playlist.get(0).getTitle());
-        System.out.println(playlist.get(1).getTitle());
+        addPlaylist(playlist, albums, "Painkiller");
+        addPlaylist(playlist, albums, "Lust for Life");
 
         surf(playlist);
 
@@ -47,27 +44,32 @@ public class Test {
 
     private static void addPlaylist(LinkedList<Songs> linkedList, ArrayList<Album> albums, String song){
         int counter = 0;
-        int index1 = 0;
-        int index2 = 0;
-        if(linkedList.isEmpty()){
-            for(int i = 0; i < albums.size(); i++){
-                for(int j = 0; j<albums.get(i).getAlbum().size(); j++){
+        for(int i = 0; i < albums.size(); i++){
+            for(int j = 0; j<albums.get(i).getAlbum().size(); j++){
+                if(albums.get(i).getAlbum().get(j).getTitle().equals(song)){
                     counter++;
-                    index1++;
+                    linkedList.add(albums.get(i).getAlbum().get(j));
+                }
+
+                if(counter>0){
                     break;
                 }
-                index1 = 0;
-                index2++;
             }
             if(counter>0){
-                linkedList.add(albums.get(index2-1).getAlbum().get(index1));
-            }else{
-                System.out.println("The song you are searching for is unavailable.");
+                break;
             }
-        }else{
-            
         }
+        if(counter==0){
+            System.out.println("The song you are searching for is unavailable.");
+        }
+    }
 
+    private static void printList(LinkedList<Songs> linkedList){
+        Iterator<Songs> i = linkedList.iterator();
+        while(i.hasNext()){
+            System.out.println("We have: " + i.next().getTitle());
+        }
+        System.out.println("========================");
     }
 
     private static void surf(LinkedList<Songs> linkedList){
@@ -113,7 +115,7 @@ public class Test {
                         goingForward = false;
                     }
                     if (songsListIterator.hasPrevious()) {
-                        System.out.println("Now listening " + songsListIterator.previous());
+                        System.out.println("Now listening " + songsListIterator.previous().getTitle());
                     } else {
                         System.out.println("We are at the end of the queue.");
                         goingForward = true;
